@@ -1,4 +1,5 @@
-# before using the app , add the NASA Api Key into local.properties(SDK Location)
+# before using the app , 
+# add the NASA Api Key into <br> local.properties(SDK Location)
 
 nasa_api_key = ***your api key***
 
