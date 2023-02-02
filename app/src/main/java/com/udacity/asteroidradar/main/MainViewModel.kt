@@ -1,23 +1,28 @@
 package com.udacity.asteroidradar.main
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.udacity.asteroidradar.api.PictureOfDay
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.repository.AsteroidsRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.util.*
 
+enum class AsteroidFilters { TODAY, WEEK, SAVED }
 
 class MainViewModel(application: Application) : ViewModel() {
 
 
     private val database = AsteroidDatabase.getDatabase(application)
     private val asteroidRepository = AsteroidsRepository(database)
+    private val filter = MutableLiveData(AsteroidFilters.SAVED)
+
 
     init {
+
         viewModelScope.launch {
             asteroidRepository.getPictureOfDay()
             asteroidRepository.refreshAsteroids()
@@ -29,10 +34,29 @@ class MainViewModel(application: Application) : ViewModel() {
         get() = _pictureOfDay
 
 
-    private val _asteroids = asteroidRepository.asteroids
+    // when the filter changes this transformation happens automatically
+    private val _asteroids = Transformations.switchMap(filter) {
+        when (it) {
+            AsteroidFilters.TODAY -> asteroidRepository.todayAsteroids
+            AsteroidFilters.WEEK -> asteroidRepository.weekAsteroids
+            else -> asteroidRepository.asteroids
+        }
+    }
     val asteroids: LiveData<List<Asteroid>>
         get() = _asteroids
 
 
+    fun onShowSavedAsteroidMenuClicked() {
+        filter.value = AsteroidFilters.SAVED
+    }
+
+
+    fun onShowTodayAsteroidMenuClicked() {
+        filter.value = AsteroidFilters.TODAY
+    }
+
+    fun onShowWeekAsteroidMenuClicked() {
+        filter.value = AsteroidFilters.WEEK
+    }
 
 }
