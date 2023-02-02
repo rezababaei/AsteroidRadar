@@ -11,7 +11,7 @@
 
         <variable
             name="asteroidCallback"
-            type="com.udacity.asteroidradar.main.AsteroidClickListener" />
+            type="com.udacity.asteroidradar.ui.main.AsteroidClickListener" />
     </data>
 
     <!--the main layout for item-->

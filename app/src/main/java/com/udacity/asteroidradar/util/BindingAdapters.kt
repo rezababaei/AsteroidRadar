@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.PictureOfDay
 import com.udacity.asteroidradar.domain.Asteroid
-import com.udacity.asteroidradar.main.AsteroidAdapter
+import com.udacity.asteroidradar.ui.main.AsteroidAdapter
 import com.udacity.asteroidradar.util.Constants.IMAGE_TYPE
 
 @BindingAdapter("setPictureOfDayAndDescription")
