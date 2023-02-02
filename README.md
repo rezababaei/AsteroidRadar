@@ -1,6 +1,18 @@
-# Purpose of this Folder
+# before using the app , 
+# add the NASA Api Key into <br> local.properties(SDK Location)
 
-This folder should contain the scaffolded project files to get a student started on their project. This repo will be added to the Classroom for students to use, so please do not have any solutions in this folder.
+nasa_api_key = ***your api key***
+
+
+# this app suppurts: 
+
+Mutliple Langugaes<br>
+Different screen sizes<br>
+device rotation<br>
+dark mode and light mode theming
+
+
+
 
 ## Note: Android Kotlin Gradle Update
 Use the updated Gradle version in the `~/gradle/wrapper/gradle-wrapper.properties` file:
@@ -26,5 +38,5 @@ url: https://apod.nasa.gov/apod/image/2001/STSCI-H-p2006a-h-1024x614.jpg
 media_type: The image of the day could be an image or a video, we are using only the image, to know what media type is you have to check the media_type field, if this value is “image” you are going to download and use the image, if it’s video you are going to ignore it.
 title: The title of the picture, this is going to be used as content description of the image for Talk back.
 
-PREVIOUS
-NEXT
+
+
