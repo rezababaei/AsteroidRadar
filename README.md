@@ -6,9 +6,9 @@ nasa_api_key = ***your api key***
 
 # this app suppurts: 
 
-Mutliple Langugaes
-Different screen sizes
-device rotation
+Mutliple Langugaes<br>
+Different screen sizes<br>
+device rotation<br>
 dark mode and light mode theming
 
 
