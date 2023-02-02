@@ -3,6 +3,17 @@
 
 nasa_api_key = ***your api key***
 
+
+# this app suppurts: 
+
+Mutliple Langugaes
+Different screen sizes
+device rotation
+dark mode and light mode theming
+
+
+
+
 ## Note: Android Kotlin Gradle Update
 Use the updated Gradle version in the `~/gradle/wrapper/gradle-wrapper.properties` file:
 ```
@@ -27,5 +38,5 @@ url: https://apod.nasa.gov/apod/image/2001/STSCI-H-p2006a-h-1024x614.jpg
 media_type: The image of the day could be an image or a video, we are using only the image, to know what media type is you have to check the media_type field, if this value is “image” you are going to download and use the image, if it’s video you are going to ignore it.
 title: The title of the picture, this is going to be used as content description of the image for Talk back.
 
-PREVIOUS
-NEXT
+
+
