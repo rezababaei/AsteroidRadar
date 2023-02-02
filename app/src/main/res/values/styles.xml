@@ -1,11 +1,35 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
+<!--        title bar Color-->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <!--        android status bar Color-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryVariant">@color/app_background</item>
+        <item name="colorOnPrimary">@color/default_text_color</item>
+        <item name="android:textColor">@color/default_text_color</item>
+        <item name="colorSecondaryVariant">@color/potentially_hazardous</item>
     </style>
+
+<!--    &lt;!&ndash; Base application theme. &ndash;&gt;-->
+<!--    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/primaryColor</item>-->
+<!--        <item name="colorPrimaryDark">@color/primaryDarkColor</item>-->
+<!--        <item name="colorPrimaryVariant">@color/primaryLightColor</item>-->
+<!--        <item name="colorOnPrimary">@color/primaryTextColor</item>-->
+<!--        <item name="colorSecondary">@color/secondaryColor</item>-->
+<!--        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>-->
+<!--        <item name="colorOnSecondary">@color/secondaryTextColor</item>-->
+
+<!--        <item name="fontFamily">@font/lobster_two</item>-->
+<!--        <item name="android:fontFamily">@font/lobster_two</item>-->
+
+<!--        <item name="textAppearanceHeadline6">@style/CustomHeadline6</item>-->
+<!--    </style>-->
 
 </resources>
