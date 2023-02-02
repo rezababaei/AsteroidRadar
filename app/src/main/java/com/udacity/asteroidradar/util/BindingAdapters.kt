@@ -32,6 +32,7 @@ fun bindPictureOfDayAndDescription(imageView: ImageView, pictureOfDay: PictureOf
     } else {
         imageView.contentDescription =
             context.getString(R.string.this_is_nasa_s_picture_of_day_showing_nothing_yet)
+        imageView.setImageResource(R.drawable.ic_no_internet)
     }
 
 }
@@ -57,13 +58,18 @@ fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
         imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
         DrawableCompat.setTint(imageView.drawable,
             ContextCompat.getColor(context, R.color.potentially_hazardous))
+        imageView.contentDescription =
+            imageView.resources.getString(R.string.potentially_hazardous_asteroid_image)
     } else {
         imageView.setImageResource(R.drawable.ic_status_normal)
+        imageView.contentDescription =
+            imageView.resources.getString(R.string.not_hazardous_asteroid_image)
     }
 }
 
 @BindingAdapter("asteroidStatusImage")
 fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
+    val context = imageView.context
     if (isHazardous) {
         imageView.setImageResource(R.drawable.asteroid_hazardous)
         imageView.contentDescription =
