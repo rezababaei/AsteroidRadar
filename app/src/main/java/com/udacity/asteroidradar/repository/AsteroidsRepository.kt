@@ -12,6 +12,7 @@ import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.asDatabaseModel
 import com.udacity.asteroidradar.database.asDomainModel
 import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.ui.main.AsteroidFilter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -22,34 +23,38 @@ import timber.log.Timber
  */
 class AsteroidsRepository(private val database: AsteroidDatabase) {
 
+    private val _filterType = MutableLiveData(AsteroidFilter.SAVED)
 
     /**
      * A list of asteroids that can be shown on the screen.
      */
-    val asteroids: LiveData<List<Asteroid>> =
-        Transformations.map(database.asteroidDatabaseDao.getAllAsteroids()) {
+    private val _asteroids: LiveData<List<Asteroid>> =
+        Transformations.map(database.asteroidDao.getAllAsteroids()) {
             it.asDomainModel()
         }
 
-    /**
-     * A list of today's asteroids that can be shown on the screen.
-     */
-    val todayAsteroids: LiveData<List<Asteroid>> =
-        Transformations.map(asteroids) { asteroidList ->
-            asteroidList.filter { asteroid ->
-                asteroid.closeApproachDate == getToday()
-            }
-        }
 
-    /**
-     * A list of week's asteroids that can be shown on the screen.
-     */
-    val weekAsteroids: LiveData<List<Asteroid>> =
-        Transformations.map(asteroids) { asteroidList ->
-            asteroidList.filter { asteroid ->
-                asteroid.closeApproachDate > getToday()
-            }
+    val asteroidsWithFilter: LiveData<List<Asteroid>> = Transformations.switchMap(_filterType)
+    {
+        when (it) {
+            AsteroidFilter.WEEK ->
+                Transformations.map(_asteroids) { asteroidList ->
+                    asteroidList.filter { asteroid -> asteroid.closeApproachDate > getToday() }
+                }
+
+            AsteroidFilter.TODAY ->
+                Transformations.map(_asteroids) { asteroidList ->
+                    asteroidList.filter { asteroid -> asteroid.closeApproachDate == getToday() }
+                }
+
+            AsteroidFilter.SAVED -> _asteroids
+            else -> throw IllegalArgumentException("")
         }
+    }
+
+    fun updateFilter(filterType: AsteroidFilter) {
+        _filterType.value = filterType
+    }
 
 
     private val _pictureOfDay = MutableLiveData<PictureOfDay>()
@@ -62,7 +67,6 @@ class AsteroidsRepository(private val database: AsteroidDatabase) {
             try {
                 val pictureOfDay = NetworkModules.asteroidApi.getPictureOfDay()
                 _pictureOfDay.postValue(pictureOfDay)
-
             } catch (e: Exception) {
                 Timber.e("Error: $e")
             }
@@ -82,9 +86,8 @@ class AsteroidsRepository(private val database: AsteroidDatabase) {
                 val jsObj = JSONObject(asteroids)
 
                 val list = parseAsteroidsJsonResult(jsObj)
-                database.asteroidDatabaseDao.insertAll(*list.asDatabaseModel())
-
-                database.asteroidDatabaseDao.removeOldAsteroids(dates.first())
+                database.asteroidDao.insertAll(*list.asDatabaseModel())
+                database.asteroidDao.removeOldAsteroids(dates.first())
             } catch (e: Exception) {
                 Timber.e("Error: $e")
             }
